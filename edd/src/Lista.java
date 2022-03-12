@@ -380,6 +380,7 @@ public class Lista<T> implements Collection<T> {
      *         <code>null</code>.
      */
     public int indexOf(T elemento) {
+        if(!contains(elemento)) throw new NoSuchElementException("La lista no contiene al elemento.");
         int count = 0;
         if(contains(elemento)) {
           Nodo n = cabeza;
@@ -412,7 +413,7 @@ public class Lista<T> implements Collection<T> {
      *                                  <code>null</code>.
      */
     public void insert(int i, T elemento) {
-        if(i < 0) {
+        if(i < 0 || isEmpty()) {
           agregaInicio(elemento);
           longi++;
         } else if(i >= longi) {
@@ -432,28 +433,45 @@ public class Lista<T> implements Collection<T> {
           n.siguiente = nuevo;
           longi++;
         }
-
         return ;
     }
 
-    // Tu comentario
+    /**
+     * Regresa el elemnto en el índice ingresado.
+     *
+     * @param index el índice del nodo de la lista con el elemento de interés.
+     * @return elemento del índice indicado.
+     * @throws IllegalArgumentException si index < 0 v index > longitud de la lista.
+     */
+    private T getElemento(int index) {
+      if (index < 0 || index > longi) throw new IllegalArgumentException("Índice no válido.");
+      Nodo n = cabeza;
+      int i = 1;
+      while(n != null){
+          if(i == index) {
+              return n.elemento;
+          }
+          i++;
+          n=n.siguiente;
+      }
+      return null;
+    }
+
+    /**
+     * Dados 2 ejemplares de nuestra clase Lista A y B, la función la une de manera
+     * alternada, es decir, a un elemento de A le seguirá un elemento de la lista B y viceversa.
+     * Este método cambia la lista original
+     *
+     * @param lista es la lista con la cual se va a intercalar la lista objetivo.
+     */
     public void mezclaAlternada(Lista<T> lista) {
-      Nodo nodo = cabeza;
-      Nodo nuevo;
-      int count = 0;
-      while(count < longi-1) {
-        if(!lista.isEmpty()){
-          T elem = lista.popInicio();
-          System.out.println("Elemento: " + elem);
-          nuevo = new Nodo(elem);
-          nuevo.anterior = nodo;
-          nuevo.siguiente = nodo.siguiente;
-          nodo.siguiente.anterior = nuevo;
-          nodo.siguiente = nuevo;
-          nodo = nuevo.siguiente;
-          count++;
-        }
-        else break;
+      int count = 1;
+      int index = 1;
+      while(count <= lista.size()) {
+        T elem = lista.getElemento(count);
+        insert(index, elem);
+        count++;
+        index += 2;
       }
     }
 

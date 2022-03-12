@@ -136,11 +136,11 @@ public class Practica1 {
         }
 
         primera.mezclaAlternada(segunda);
-        System.out.println("Primera: " + primera.toString());
+        //System.out.println("Primera: " + primera.toString());
+        //System.out.println("Tercera: " + tercera.toString());
         if (!primera.toString().equals(tercera.toString())) {
             System.out.println("1 la mezclaAlternada no funciona!");
         }
-
 
         // Tests Agrega Ordenado
         primera = new Lista<Integer>();
