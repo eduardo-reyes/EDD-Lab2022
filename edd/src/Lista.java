@@ -138,6 +138,13 @@ public class Lista<T> implements Collection<T> {
         longi++;
     }
 
+    /**
+     * Busca el elemento ingresado y devuelve
+     * el nodo que lo contiene.
+     *
+     * @param elemento a buscar.
+     * @return El nodo que lo contiene.
+     */
     private Nodo buscaElemento(T elemento){
         Nodo n = cabeza;
         while(n !=null){
@@ -298,38 +305,27 @@ public class Lista<T> implements Collection<T> {
     /**
      * Metodo que invierte el orden de la lista .
      *
+     * Tiempo: O(n). Cuenta con un único ciclo while
+     * que recorre todo la lista de n elementos.
+     * Lo demás es constante.
+     * Espacio: O(1). Aunque se crean nodos, éstos son
+     * temporales, ya que no se agregan a la lista final
+     * ni se crea otra lista que ocupe espacio en memoria.
+     *
      */
     public void reverse() {
-        /* Lista<T> reversa = new Lista<T>();
+        if(isEmpty()) return;
         Nodo nodo = cabeza;
+        Nodo cabezaTemp = cabeza;
         while(nodo != null) {
-          reversa.agregaInicio(nodo.elemento);
-          nodo = nodo.siguiente;
+          Nodo aux = nodo.anterior;
+          nodo.anterior = nodo.siguiente;
+          nodo.siguiente = aux;
+          cabezaTemp = nodo;
+          nodo = nodo.anterior;
         }
-        empty();
-        while (!reversa.isEmpty()) {
-            add(reversa.popInicio());
-        } */
-        if (isEmpty()) return;
-        int count = 0;
-        T elem = popInicio();
-        Nodo nuevo = new Nodo(elem);
-        ultimo.siguiente = nuevo;
-        nuevo.anterior = ultimo;
-        ultimo = nuevo;
-        longi++;
-        Nodo nodo = ultimo;
-        while(count < longi-2) {
-          elem = popInicio();
-          nuevo = new Nodo(elem);
-          nuevo.anterior = nodo.anterior;
-          nuevo.siguiente = nodo;
-          nodo.anterior.siguiente = nuevo;
-          nodo.anterior = nuevo;
-          nodo = nuevo;
-          longi++;
-          count++;
-        }
+        ultimo = cabeza;
+        cabeza = cabezaTemp;
     }
 
     /**
@@ -437,42 +433,50 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
-     * Regresa el elemnto en el índice ingresado.
-     *
-     * @param index el índice del nodo de la lista con el elemento de interés.
-     * @return elemento del índice indicado.
-     * @throws IllegalArgumentException si index < 0 v index > longitud de la lista.
-     */
-    private T getElemento(int index) {
-      if (index < 0 || index > longi) throw new IllegalArgumentException("Índice no válido.");
-      Nodo n = cabeza;
-      int i = 1;
-      while(n != null){
-          if(i == index) {
-              return n.elemento;
-          }
-          i++;
-          n=n.siguiente;
-      }
-      return null;
-    }
-
-    /**
-     * Dados 2 ejemplares de nuestra clase Lista A y B, la función la une de manera
+     * Dados 2 ejemplares de nuestra clase Lista A y B, la función los une de manera
      * alternada, es decir, a un elemento de A le seguirá un elemento de la lista B y viceversa.
-     * Este método cambia la lista original
+     * Este método cambia la lista original.
+     *
+     * Tiempo: O(n+m). Con n el tamaño de la lista que llama al método.
+     * Es de ese orden porque cuenta con un ciclo while que itera
+     * hasta llegar a la longitud de la lista, por lo que su
+     * complejidad es en realidad O(n).
+     *
+     * Espacio O(1). Es constante porque no se crean nodos
+     * ni listas nuevas que se quedan en memoria. Sölo hay nodos
+     * auxiliares para iterar.
      *
      * @param lista es la lista con la cual se va a intercalar la lista objetivo.
      */
     public void mezclaAlternada(Lista<T> lista) {
+      Nodo nodo = cabeza;
+      Nodo nuevo;
       int count = 1;
-      int index = 1;
-      while(count <= lista.size()) {
-        T elem = lista.getElemento(count);
-        insert(index, elem);
-        count++;
-        index += 2;
+      while(count < longi) {
+        if(!lista.isEmpty()){
+          nuevo = lista.getCabeza();
+          lista.popInicio();
+          nuevo.anterior = nodo;
+          nuevo.siguiente = nodo.siguiente;
+          nodo.siguiente.anterior = nuevo;
+          nodo.siguiente = nuevo;
+          nodo = nuevo.siguiente;
+          count++;
+        }
+        else break;
       }
+      /*
+      Nodo nodo = cabeza;
+      Iterador iter = (Iterador) lista.iteradorLista();
+      while(nodo != null) {
+        iter.siguiente.anterior = nodo;
+        iter.siguiente.siguiente = nodo.siguiente;
+        nodo.siguiente.anterior = iter.siguiente;
+        nodo.siguiente = iter.siguiente;
+        nodo = iter.siguiente.siguiente;
+        T dat = iter.next();
+        System.out.println("Dato: " + dat);
+      } */
     }
 
     /**

@@ -6,21 +6,98 @@ public class Practica1 {
 
 
 
-    // Aqui va tu comentario
+  /**
+   * Dado un ejemplar de nuestra clase Lista ordenado se le agrega un elemen-
+   * to de manera ordenada.
+   *
+   * Tiempo: O(n). Contiene un único while que en una iteración cuando el
+   * elemento es mayor a los anteriores en la lista, se inserta en el lugar
+   * según la cantidad de elementos que ya pasó.
+   *
+   * Espacio: O(1). No crea otra lista o colección que se quede en memoria
+   * ocupando espacio.
+   *
+   * @param lista Es la lista a agregarle el elemento.
+   * @param nuevo el entero a agregar según su valor en la lista.
+   */
     public static Lista<Integer> AgregaOrdenado(Lista<Integer> lista, int nuevo) {
-        //Tu codigo aqui
+        int count = 0;
+        IteradorLista<Integer> iter = lista.iteradorLista();
+        while(iter.hasNext()) {
+          if(nuevo <= iter.next()) {
+              lista.insert(count,nuevo);
+              return lista;
+          }
+          count++;
+        }
         return null;
     }
 
-    // Aqui va tu comentario
+    /**
+     * Dados dos ejemplares de nuestra clase Lista obtenemos la unión de estos.
+     * Se considera que no hay duplicados en lista1 y lista 2.
+     * No se regresa en un orden específico más allá de la operatividad
+     * del algoritmo.
+     *
+     * Tiempo: O(n*m).  Con n el tamaño de lista 1 y m de lista2.
+     * Dentro del ciclo for, para evaluar la condicional
+     * if, se llama al método contains, que a su vez llama al método
+     * buscaElemento que recorre lista1 con n elementos hasta encontrar
+     * la coincidencia de existir, que en el peor caso es n lugares.
+     * Como el iterador sobre lista2 hace m ciclos por sus m elementos,
+     * la complejidad resulta en n*m.
+     *
+     * Espacio: O(n+m). La lista resultante de la unión mínimo tiene n
+     * elementos de la lista1, ya que consideramos que no hay duplicados.
+     * Como en el peor caso no hay elementos repetidos entre ambas listas,
+     * la longitud final de la lista es n+m (espacio en memoria).
+     *
+     * @param lista1 es la lista sobre la que se hará la unión.
+     * @param lista2 es la lista a unir con lista 1.
+     */
     public static void Union(Lista<Integer> lista1,Lista<Integer> lista2) {
-         return ;
+        IteradorLista<Integer> iter2 = lista2.iteradorLista();
+        while(iter2.hasNext()) {
+          Integer int2 = iter2.next();
+          if(!lista1.contains(int2)) {
+            lista1.add(int2);
+          }
+        }
+        return;
     }
 
-    // Aqui va tu comentario
+    /**
+     * Dados dos ejemplares de nuestra clase Lista obtenemos la intersección de estos.
+     * Se considera que no hay duplicados en lista y lista 2.
+     * No se regresa en un orden específico más allá de la operatividad
+     * del algoritmo.
+     *
+     * Tiempo: O(n*m). Con n el tamaño de lista 1 y m de lista2.
+     * Dentro del ciclo for, para evaluar la condicional
+     * if, se llama al método contains, que a su vez llama al método
+     * buscaElemento que recorre lista2 con m elementos hasta encontrar
+     * la coincidencia de existir, que en el peor caso es m lugares.
+     * Como el iterador sobre lista hace n ciclos por sus n elementos,
+     * la complejidad resulta en n*m.
+     *
+     * Espacio: O(n) si n > m. De lo contrario es O(m).
+     * Como la lista 2 tiene m elementos, y le vamos quitando aquellos
+     * que no comparta con la lista 1, el espacio final en memoria,
+     * en el peor caso donde ambas listas son iguales, es que su
+     * complejidad sea O(m).
+     *
+     * @param lista es la lista sobre la que se hará la intersección.
+     * @param lista2 es la lista a intersectar con lista 1.
+     */
     public static void Interseccion(Lista<Integer> lista,Lista<Integer> lista2) {
-
-        return ;
+      IteradorLista<Integer> iter = lista.iteradorLista();
+      while(iter.hasNext()) {
+        Integer elemento = iter.next();
+        if(!lista2.contains(elemento)) {
+          lista.delete(elemento);
+        }
+      }
+      return ;
     }
 
 
@@ -136,8 +213,6 @@ public class Practica1 {
         }
 
         primera.mezclaAlternada(segunda);
-        //System.out.println("Primera: " + primera.toString());
-        //System.out.println("Tercera: " + tercera.toString());
         if (!primera.toString().equals(tercera.toString())) {
             System.out.println("1 la mezclaAlternada no funciona!");
         }
@@ -153,7 +228,6 @@ public class Practica1 {
         }
         segunda.add(9);
         segunda.add(10);
-
 
         tercera = AgregaOrdenado(primera,9);
         if (!tercera.toString().equals(segunda.toString())) {
