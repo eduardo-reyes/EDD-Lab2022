@@ -1,5 +1,5 @@
-Nombres ->
-        ->
+Nombres -> Reyes López Eduardo Alfonso
+No. Cuenta -> 420003681
 
 compilar -> javac -d . src/*.java
 Ejecutar -> java Clases.Practica1

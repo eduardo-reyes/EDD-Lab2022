@@ -5,6 +5,7 @@ import java.util.NoSuchElementException;
 // iterador
 //next
 
+ // Alumno: Reyes López Eduardo Alfonso
 public class Lista<T> implements Collection<T> {
 
     // Clase Nodo
@@ -292,22 +293,23 @@ public class Lista<T> implements Collection<T> {
         T valor = cabeza.elemento;
         cabeza = cabeza.siguiente;
         if(cabeza == null) {
-          longi --;
+          longi--;
           return valor;
         }
         else {
           cabeza.anterior = null;
-          longi --;
+          longi--;
           return valor;
         }
     }
 
     /**
-     * Metodo que invierte el orden de la lista .
+     * Método que invierte el orden de la lista .
      *
      * Tiempo: O(n). Cuenta con un único ciclo while
      * que recorre todo la lista de n elementos.
      * Lo demás es constante.
+     *
      * Espacio: O(1). Aunque se crean nodos, éstos son
      * temporales, ya que no se agregan a la lista final
      * ni se crea otra lista que ocupe espacio en memoria.
@@ -360,14 +362,17 @@ public class Lista<T> implements Collection<T> {
      *
      */
     public void append(Lista<T> lista) {
-      if(lista instanceof Lista) {
-          ultimo.siguiente = lista.getCabeza();
+      if(isEmpty()) cabeza = lista.getCabeza();
+      else {
+        if(lista instanceof Lista) {
+            ultimo.siguiente = lista.getCabeza();
+          }
       }
     }
 
     /**
      * Regresa un entero con la posicion del elemento.
-     * Solo nos importara la primera aparición del elemento
+     * Sólo nos importara la primera aparición del elemento
      * Empieza a contar desde 0.
      *
      * @param elemento elemento del cual queremos conocer la posición.
@@ -378,15 +383,13 @@ public class Lista<T> implements Collection<T> {
     public int indexOf(T elemento) {
         if(!contains(elemento)) throw new NoSuchElementException("La lista no contiene al elemento.");
         int count = 0;
-        if(contains(elemento)) {
-          Nodo n = cabeza;
-          while(n !=null){
-              if (elemento.equals(n.elemento)) {
-                return count;
-              }
-              count++;
-              n = n.siguiente;
+        Nodo n = cabeza;
+        while(n !=null){
+            if (elemento.equals(n.elemento)) {
+              return count;
             }
+            count++;
+            n = n.siguiente;
         }
         return 0;
     }
@@ -400,7 +403,7 @@ public class Lista<T> implements Collection<T> {
      * de mandar llamar el método, el elemento tendrá el índice que se
      * especifica en la lista.
      *
-     * @param i        el índice dónde insertar el elemento. Si es menor que 0 el
+     * @param i        el índice donde insertar el elemento. Si es menor que 0 el
      *                 elemento se agrega al inicio, y si es mayor o igual que el
      *                 número
      *                 de elementos en la lista se agrega al final.
@@ -433,6 +436,28 @@ public class Lista<T> implements Collection<T> {
     }
 
     /**
+    * Regresa el elemento en el índice ingresado.
+    *
+    * @param index el índice del nodo de la lista con el elemento de interés.
+    * @return elemento del índice indicado.
+    * @throws IllegalArgumentException si index <= 0 v index > longitud de la lista.
+    */
+    private T getElemento(int index) {
+        if (index <= 0 || index > longi) throw new IllegalArgumentException("Índice no válido.");
+        Nodo n = cabeza;
+        int i = 1;
+        while(n != null){
+          if(i == index) {
+            return n.elemento;
+          }
+          i++;
+          n = n.siguiente;
+        }
+        return null;
+    }
+
+
+    /**
      * Dados 2 ejemplares de nuestra clase Lista A y B, la función los une de manera
      * alternada, es decir, a un elemento de A le seguirá un elemento de la lista B y viceversa.
      * Este método cambia la lista original.
@@ -443,7 +468,7 @@ public class Lista<T> implements Collection<T> {
      * complejidad es en realidad O(n).
      *
      * Espacio O(1). Es constante porque no se crean nodos
-     * ni listas nuevas que se quedan en memoria. Sölo hay nodos
+     * ni listas nuevas que se quedan en memoria. Sólo hay nodos
      * auxiliares para iterar.
      *
      * @param lista es la lista con la cual se va a intercalar la lista objetivo.
@@ -465,18 +490,17 @@ public class Lista<T> implements Collection<T> {
         }
         else break;
       }
-      /*
-      Nodo nodo = cabeza;
-      Iterador iter = (Iterador) lista.iteradorLista();
-      while(nodo != null) {
-        iter.siguiente.anterior = nodo;
-        iter.siguiente.siguiente = nodo.siguiente;
-        nodo.siguiente.anterior = iter.siguiente;
-        nodo.siguiente = iter.siguiente;
-        nodo = iter.siguiente.siguiente;
-        T dat = iter.next();
-        System.out.println("Dato: " + dat);
-      } */
+
+      //Otro método de mezclaAlternada que ocupa espacio O(n+m).
+      /* int count = 1;
+     int index = 1;
+     while(count <= lista.size()) {
+       T elem = lista.getElemento(count);
+       insert(index, elem);
+       count++;
+       index += 2;
+     } */
+
     }
 
     /**

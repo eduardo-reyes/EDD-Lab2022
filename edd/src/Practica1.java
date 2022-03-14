@@ -2,6 +2,7 @@ package Clases;
 
 import java.util.Iterator;
 
+//Alumno: Reyes López Eduardo Alfonso
 public class Practica1 {
 
 
@@ -39,6 +40,16 @@ public class Practica1 {
      * No se regresa en un orden específico más allá de la operatividad
      * del algoritmo.
      *
+     * Una posible mejora al método consistiría en primero unir ambas listas como
+     * con el método append o similar que haga una especie de "merge" a las listas,
+     * porque toma tiempo constante. Y ya después algún método podría verificar
+     * si existen duplicados. Como es una sola lista, y presuponemos que en una
+     * misma lista no hay duplicados, la verificación podría comenzar a partir de
+     * la longitud de la primera lista. Es más óptimo, porque el método insert
+     * que uso aquí toma tiempo inicialmente n, y va incrementando conforme se
+     * le agregan más elementos. Por lo que tener ya todo en una misma lista
+     * podría llegar a ser más conveniente.
+     *
      * Tiempo: O(n*m).  Con n el tamaño de lista 1 y m de lista2.
      * Dentro del ciclo for, para evaluar la condicional
      * if, se llama al método contains, que a su vez llama al método
@@ -72,6 +83,18 @@ public class Practica1 {
      * No se regresa en un orden específico más allá de la operatividad
      * del algoritmo.
      *
+     * La única mejora que se me ocurre con esta estructura, podría ser
+     * pedir desde un inicio que las listas estén ordenadas de menor a mayor
+     * lo que nos permitiría tomar la lista con el intervalo de números más
+     * chico, y quitar los elementos fuera de ese rango para mo iterarlos
+     * al buscar coindidencias.
+     * Por ejemplo, tomemos: lista1 = 1 -> 2 -> 3 -> 4 -> 5 -> 9 -> 20
+     * lista2 = 3 -> 5. Entonces quitamos los elementos de list1 que sean
+     * menores qie 3 y mayores que 5 para quitarlos de las iteraciones en
+     * la búsqueda de contains().
+     * Es sólo una mejora al considerar que están ordenadas, de otra forma
+     * habría que considerar la complejidad de un algoritmo de ordenamiento.
+     *
      * Tiempo: O(n*m). Con n el tamaño de lista 1 y m de lista2.
      * Dentro del ciclo for, para evaluar la condicional
      * if, se llama al método contains, que a su vez llama al método
@@ -81,10 +104,10 @@ public class Practica1 {
      * la complejidad resulta en n*m.
      *
      * Espacio: O(n) si n > m. De lo contrario es O(m).
-     * Como la lista 2 tiene m elementos, y le vamos quitando aquellos
-     * que no comparta con la lista 1, el espacio final en memoria,
+     * Como la lista tiene n elementos, y le vamos quitando aquellos
+     * que no comparta con la lista 2, el espacio final en memoria,
      * en el peor caso donde ambas listas son iguales, es que su
-     * complejidad sea O(m).
+     * complejidad sea O(n).
      *
      * @param lista es la lista sobre la que se hará la intersección.
      * @param lista2 es la lista a intersectar con lista 1.
