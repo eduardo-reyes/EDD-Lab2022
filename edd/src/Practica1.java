@@ -31,7 +31,8 @@ public class Practica1 {
           }
           count++;
         }
-        return null;
+        lista.insert(count,nuevo);
+        return lista;
     }
 
     /**
@@ -256,6 +257,14 @@ public class Practica1 {
         if (!tercera.toString().equals(segunda.toString())) {
             System.out.println("1 el agregaOrdenado no funciona!");
         }
+        //Extra
+        primera = new Lista<Integer>();
+        segunda = new Lista<Integer>();
+        for (int i = 0; i <= 10; i++) {
+            primera.add(i);
+        }
+        segunda = AgregaOrdenado(primera,11);
+        System.out.println(segunda.toString());
 
         // Tests Union
         primera = new Lista<Integer>();
